@@ -1,0 +1,236 @@
+.tienda-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.tienda-hero {
+  background: linear-gradient(135deg, #fff5e6 0%, #ffe6cc 100%);
+  padding: 40px 20px;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 40px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.tienda-hero h1 {
+  margin: 0 0 10px 0;
+  color: #8b4513;
+  font-size: 36px;
+}
+
+.tienda-hero p {
+  margin: 0;
+  color: #a0826d;
+  font-size: 16px;
+}
+
+.info-demo {
+  background: #fff3cd;
+  border: 1px solid #ffc107;
+  color: #856404;
+  padding: 12px 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.tienda-controles {
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.filtro-categoria {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.filtro-categoria label {
+  color: #8b4513;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.filtro-categoria select {
+  padding: 8px 15px;
+  border: 2px solid #d4a574;
+  border-radius: 8px;
+  background: white;
+  color: #8b4513;
+  font-size: 14px;
+  cursor: pointer;
+  transition: border-color 0.3s;
+}
+
+.filtro-categoria select:hover {
+  border-color: #c9915c;
+}
+
+.filtro-categoria select:focus {
+  outline: none;
+  border-color: #8b4513;
+  box-shadow: 0 0 0 3px rgba(212, 165, 116, 0.2);
+}
+
+.productos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 25px;
+  margin-bottom: 40px;
+}
+
+.producto-card-publico {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.producto-card-publico:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.producto-card-publico img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  background: linear-gradient(135deg, #fff5e6 0%, #ffe6cc 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 80px;
+}
+
+.producto-info {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.producto-info h3 {
+  margin: 0 0 10px 0;
+  color: #8b4513;
+  font-size: 18px;
+}
+
+.producto-info .descripcion {
+  margin: 0 0 10px 0;
+  color: #6b6b6b;
+  font-size: 13px;
+  line-height: 1.4;
+  flex: 1;
+}
+
+.categoria-badge {
+  display: inline-block;
+  background: #d4a574;
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  width: fit-content;
+  text-transform: uppercase;
+}
+
+.producto-info .precio {
+  margin: 10px 0;
+  color: #d4a574;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.btn-comprar {
+  background: linear-gradient(135deg, #d4a574 0%, #c9915c 100%);
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 14px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  margin-top: auto;
+}
+
+.btn-comprar:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(212, 165, 116, 0.3);
+}
+
+.btn-comprar:active {
+  transform: scale(0.98);
+}
+
+.sin-productos {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 40px 20px;
+  color: #a0826d;
+  font-size: 18px;
+}
+
+.loading {
+  text-align: center;
+  padding: 40px 20px;
+  color: #8b4513;
+  font-size: 18px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .tienda-hero h1 {
+    font-size: 24px;
+  }
+
+  .tienda-hero p {
+    font-size: 14px;
+  }
+
+  .tienda-controles {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filtro-categoria {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filtro-categoria select {
+    width: 100%;
+  }
+
+  .productos-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .productos-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .producto-info h3 {
+    font-size: 16px;
+  }
+
+  .btn-comprar {
+    padding: 10px 15px;
+    font-size: 13px;
+  }
+}

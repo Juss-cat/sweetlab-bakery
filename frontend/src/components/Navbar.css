@@ -1,0 +1,126 @@
+.navbar {
+  background: linear-gradient(135deg, #8b4513 0%, #d4a574 100%);
+  color: white;
+  padding: 20px 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.navbar-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar-logo {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.logo-btn {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 0;
+  text-align: left;
+}
+
+.navbar-logo h1 {
+  font-size: 28px;
+  margin: 0;
+  font-weight: 700;
+  color: white;
+}
+
+.navbar-logo p {
+  font-size: 12px;
+  margin: 4px 0 0 0;
+  opacity: 0.9;
+}
+
+.navbar-menu {
+  display: flex;
+  list-style: none;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-link {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  position: relative;
+  white-space: nowrap;
+}
+
+.nav-link:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.nav-link.active {
+  background: white;
+  color: #8b4513;
+  border-color: white;
+}
+
+.nav-link.carrito-btn {
+  position: relative;
+}
+
+.cart-count {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #ff6b6b;
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 768px) {
+  .navbar-container {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .navbar-logo h1 {
+    font-size: 22px;
+  }
+
+  .navbar-menu {
+    width: 100%;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .nav-link {
+    flex: 1;
+    text-align: center;
+    font-size: 12px;
+    padding: 8px 12px;
+    min-width: fit-content;
+  }
+}

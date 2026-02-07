@@ -1,0 +1,172 @@
+.productos-container {
+  margin-top: 20px;
+}
+
+.productos-container h2 {
+  color: var(--purple-main);
+  margin-bottom: 30px;
+  font-size: 32px;
+}
+
+.flex-container {
+  display: flex;
+  gap: 20px;
+}
+
+.productos-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.producto-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.producto-imagen {
+  width: 100%;
+  height: 200px;
+  background: var(--gray-light);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.producto-imagen img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.no-imagen {
+  font-size: 48px;
+  color: var(--gray-dark);
+}
+
+.producto-card h3 {
+  color: var(--purple-main);
+  margin: 10px 0;
+  font-size: 18px;
+}
+
+.descripcion {
+  color: var(--gray-dark);
+  font-size: 14px;
+  margin: 8px 0;
+  flex-grow: 1;
+}
+
+.categoria {
+  font-size: 12px;
+  color: var(--pink-dark);
+  font-weight: 600;
+  margin: 8px 0;
+}
+
+.precio-container {
+  margin: 15px 0;
+  padding: 10px 0;
+  border-top: 1px solid var(--gray-light);
+  border-bottom: 1px solid var(--gray-light);
+}
+
+.precio {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--red-accent);
+}
+
+.carrito-sidebar {
+  width: 300px;
+  height: fit-content;
+  position: sticky;
+  top: 100px;
+}
+
+.carrito-card {
+  background: linear-gradient(135deg, rgba(255, 182, 217, 0.1) 0%, rgba(139, 107, 139, 0.1) 100%);
+}
+
+.carrito-card h3 {
+  color: var(--purple-main);
+  margin-bottom: 20px;
+}
+
+.carrito-vacio {
+  text-align: center;
+  color: var(--gray-dark);
+  padding: 30px 0;
+  font-size: 14px;
+}
+
+.carrito-items {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.carrito-item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(139, 107, 139, 0.1);
+  font-size: 13px;
+}
+
+.carrito-item span:first-child {
+  grid-column: 1;
+  color: var(--gray-dark);
+}
+
+.carrito-item .cantidad {
+  color: var(--pink-dark);
+  font-weight: 600;
+}
+
+.carrito-item .total {
+  grid-column: 2;
+  color: var(--red-accent);
+  font-weight: 600;
+}
+
+.carrito-total {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 0;
+  font-size: 16px;
+  color: var(--red-accent);
+}
+
+.btn-comprar {
+  width: 100%;
+  margin-top: 15px;
+  background: linear-gradient(135deg, var(--red-accent) 0%, #a01729 100%);
+  padding: 12px;
+  font-size: 16px;
+}
+
+.btn-comprar:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(196, 30, 58, 0.3);
+}
+
+@media (max-width: 1024px) {
+  .flex-container {
+    flex-direction: column;
+  }
+
+  .carrito-sidebar {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .productos-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+}

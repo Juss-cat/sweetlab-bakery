@@ -1,0 +1,59 @@
+{
+  "aplicacion": {
+    "nombre": "Sweet Lab Bakery",
+    "version": "3.0.0",
+    "autor": "Tu Nombre",
+    "descripcion": "Sistema de Gestión para Pastelerías"
+  },
+  "base_datos": {
+    "url": "sweetlab_bakery.db",
+    "tipo": "SQLite",
+    "crear_si_no_existe": true
+  },
+  "interfaz": {
+    "ventana": {
+      "ancho": 1200,
+      "alto": 700,
+      "titulo": "Sweet Lab Bakery - Sistema de Gestión",
+      "resizable": true
+    },
+    "tema": {
+      "nombre": "cute",
+      "color_primario": "#FFB6D9",
+      "color_secundario": "#8B6B8B",
+      "color_acento": "#C41E3A",
+      "fuente_principal": "Daily Vibes"
+    }
+  },
+  "rutas": {
+    "recursos": "resources/",
+    "imagenes": "resources/images/",
+    "logos": "resources/images/logos/",
+    "productos": "resources/images/products/",
+    "fuentes": "resources/fonts/",
+    "css": "resources/css/"
+  },
+  "caracteristicas": {
+    "mostrar_logs": true,
+    "validar_campos": true,
+    "auto_guardar": true,
+    "intervalo_guardado_ms": 60000
+  },
+  "categorias": [
+    {
+      "nombre": "Postres",
+      "icono": "🍰",
+      "cantidad_productos": 9
+    },
+    {
+      "nombre": "Bebidas",
+      "icono": "☕",
+      "cantidad_productos": 7
+    },
+    {
+      "nombre": "Comidas",
+      "icono": "🍔",
+      "cantidad_productos": 4
+    }
+  ]
+}

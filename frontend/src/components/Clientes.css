@@ -1,0 +1,185 @@
+/* Clientes.css */
+.clientes-container {
+  animation: fadeIn 0.5s ease-in;
+}
+
+.clientes-container h2 {
+  color: #8b6f47;
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+}
+
+.clientes-controles {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.busqueda-form {
+  display: flex;
+  gap: 0.5rem;
+  flex: 1;
+  min-width: 300px;
+}
+
+.busqueda-form input {
+  flex: 1;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.95rem;
+}
+
+.busqueda-form button {
+  padding: 0.75rem 1.5rem;
+  background: #0275d8;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.3s;
+}
+
+.busqueda-form button:hover {
+  background: #025aa5;
+}
+
+.btn-crear {
+  background: #d4a574;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.3s;
+}
+
+.btn-crear:hover {
+  background: #c89560;
+}
+
+.formulario-cliente {
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  margin-bottom: 2rem;
+}
+
+.formulario-cliente h3 {
+  color: #8b6f47;
+  margin-bottom: 1rem;
+}
+
+.formulario-cliente input {
+  display: block;
+  width: 100%;
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-family: inherit;
+}
+
+.formulario-cliente button {
+  background: #5cb85c;
+  color: white;
+  border: none;
+  padding: 0.75rem 2rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.3s;
+  width: 100%;
+}
+
+.formulario-cliente button:hover {
+  background: #4cae4c;
+}
+
+.clientes-tabla {
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.clientes-tabla table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.clientes-tabla th {
+  background: #f5f5f5;
+  color: #8b6f47;
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 2px solid #ddd;
+}
+
+.clientes-tabla td {
+  padding: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.clientes-tabla tr:hover {
+  background: #fafafa;
+}
+
+.estado {
+  display: inline-block;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 0.85rem;
+}
+
+.estado.activo {
+  background: #d4edda;
+  color: #155724;
+}
+
+.estado.inactivo {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.btn-eliminar {
+  background: #d9534f;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-eliminar:hover {
+  background: #c9302c;
+}
+
+@media (max-width: 768px) {
+  .clientes-controles {
+    flex-direction: column;
+  }
+
+  .busqueda-form {
+    flex-direction: column;
+    min-width: auto;
+  }
+
+  .clientes-tabla table {
+    font-size: 0.9rem;
+  }
+
+  .clientes-tabla th,
+  .clientes-tabla td {
+    padding: 0.75rem 0.5rem;
+  }
+}

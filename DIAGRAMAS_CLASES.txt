@@ -1,0 +1,651 @@
+================================================================================
+        DIAGRAMAS DE CLASES - LÓGICA DE NEGOCIO SWEETLABBAKERY
+================================================================================
+Fecha: 6 de febrero de 2026
+Proyecto: SweetLabBakery - Sistema de Gestión de Pastelería
+Paquete: model
+
+================================================================================
+1. DIAGRAMA GENERAL DE RELACIONES
+================================================================================
+
+                                    ┌─────────────┐
+                                    │   Cliente   │
+                                    ├─────────────┤
+                                    │ - id: int   │
+                                    │ - nombre    │
+                                    │ - email     │
+                                    │ - telefono  │
+                                    │ - dirección │
+                                    └──────┬──────┘
+                                           │
+                        ┌──────────────────┼──────────────────┐
+                        │                  │                  │
+                        │ (1)            (1)                (1)
+                        │                  │                  │
+                    ┌───▼────┐        ┌────▼─────┐      ┌────▼──────────┐
+                    │ Pedido  │        │  Factura │      │HistorialVenta │
+                    ├─────────┤        ├──────────┤      ├───────────────┤
+                    │ - id    │        │ - id     │      │ - id          │
+                    │ - items │◄───┐   │ - items  │      │ - idPedido    │
+                    │ - estado│    │   │ - monto  │      │ - monto       │
+                    │ - total │    │   │ - estado │      │ - estado      │
+                    └────┬────┘ (N)│   └──────────┘      │ - metodoPago  │
+                         │          │                     └───────────────┘
+                         │ (1)       └─────────┐ (1)
+                    ┌────▼────────┐            │
+                    │ItemPedido   │      ┌─────▼──────┐
+                    ├─────────────┤      │ItemFactura │
+                    │-producto    │      ├────────────┤
+                    │-cantidad    │      │-producto   │
+                    │-promocion   │      │-cantidad   │
+                    └─────┬───────┘      │-precio     │
+                          │ (N)         └────────────┘
+                          │
+                    ┌─────▼────────┐
+                    │  Producto    │
+                    ├──────────────┤
+                    │ - id: int    │
+                    │ - nombre     │
+                    │ - precio     │
+                    │ - tipo       │
+                    │ - stock      │
+                    │ - imagen     │
+                    │ - esNuevo    │
+                    │ - esMasVend  │
+                    └──────┬───────┘
+                           │
+                           │ (N)
+                           │
+                    ┌──────▼──────────┐
+                    │   Promocion     │
+                    ├─────────────────┤
+                    │ - id: int       │
+                    │ - nombre        │
+                    │ - descuento (%)  │
+                    │ - fechaInicio   │
+                    │ - fechaFin      │
+                    │ - activa        │
+                    └─────────────────┘
+
+================================================================================
+2. CLASES DETALLADAS - MODELO DE DATOS
+================================================================================
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                            CLASE: Cliente                                   │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ ATRIBUTOS PRIVADOS:                                                         │
+│ ├─ id: int                          [Identificador único]                   │
+│ ├─ nombre: String                   [Nombre del cliente]                    │
+│ ├─ email: String                    [Correo electrónico]                    │
+│ ├─ telefono: String                 [Número de teléfono]                    │
+│ ├─ direccion: String                [Dirección de envío]                    │
+│ ├─ ciudad: String                   [Ciudad de residencia]                  │
+│ └─ codigoPostal: String             [Código postal]                         │
+│                                                                             │
+│ CONSTRUCTORES:                                                              │
+│ ├─ Cliente(id, nombre, email, telefono, direccion, ciudad, codigoPostal)  │
+│ └─ Cliente(id, nombre, email, telefono)  [Simplificado]                    │
+│                                                                             │
+│ MÉTODOS:                                                                    │
+│ ├─ getId(): int                                                             │
+│ ├─ setId(int): void                                                         │
+│ ├─ getNombre(): String                                                      │
+│ ├─ setNombre(String): void                                                  │
+│ ├─ getEmail(): String                                                       │
+│ ├─ setEmail(String): void                                                   │
+│ ├─ getTelefono(): String                                                    │
+│ ├─ setTelefono(String): void                                                │
+│ ├─ getDireccion(): String                                                   │
+│ ├─ setDireccion(String): void                                               │
+│ ├─ getCiudad(): String                                                      │
+│ ├─ setCiudad(String): void                                                  │
+│ ├─ getCodigoPostal(): String                                                │
+│ └─ setCodigoPostal(String): void                                            │
+│                                                                             │
+│ RESPONSABILIDAD: Almacenar y gestionar información del cliente             │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                           CLASE: Producto                                   │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ ATRIBUTOS PRIVADOS:                                                         │
+│ ├─ id: int                          [Identificador único]                   │
+│ ├─ nombre: String                   [Nombre del producto]                   │
+│ ├─ precio: double                   [Precio unitario]                       │
+│ ├─ tipo: String                     [Tipo/Categoría]                        │
+│ ├─ descripcion: String              [Descripción del producto]              │
+│ ├─ stock: int                       [Cantidad disponible]                   │
+│ ├─ imagenPath: String               [Ruta de la imagen]                     │
+│ ├─ esNuevo: boolean                 [Indica si es producto nuevo]           │
+│ └─ esMasVendido: boolean            [Indica si es más vendido]              │
+│                                                                             │
+│ CONSTRUCTORES:                                                              │
+│ └─ Producto(id, nombre, precio, tipo, descripcion, stock)                 │
+│                                                                             │
+│ MÉTODOS:                                                                    │
+│ ├─ getId(): int                                                             │
+│ ├─ setId(int): void                                                         │
+│ ├─ getNombre(): String                                                      │
+│ ├─ setNombre(String): void                                                  │
+│ ├─ getPrecio(): double                                                      │
+│ ├─ setPrecio(double): void                                                  │
+│ ├─ getTipo(): String                                                        │
+│ ├─ setTipo(String): void                                                    │
+│ ├─ getDescripcion(): String                                                 │
+│ ├─ setDescripcion(String): void                                             │
+│ ├─ getStock(): int                                                          │
+│ ├─ setStock(int): void                                                      │
+│ ├─ getImagenPath(): String                                                  │
+│ ├─ setImagenPath(String): void                                              │
+│ ├─ isEsNuevo(): boolean                                                     │
+│ ├─ setEsNuevo(boolean): void                                                │
+│ ├─ isEsMasVendido(): boolean                                                │
+│ └─ setEsMasVendido(boolean): void                                           │
+│                                                                             │
+│ RESPONSABILIDAD: Representar productos de la pastelería con sus atributos  │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                          CLASE: Promocion                                   │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ ATRIBUTOS PRIVADOS:                                                         │
+│ ├─ id: int                          [Identificador único]                   │
+│ ├─ nombre: String                   [Nombre de la promoción]                │
+│ ├─ descuento: double                [Porcentaje de descuento (ej: 10 = 10%)│
+│ ├─ fechaInicio: LocalDate           [Fecha de inicio]                       │
+│ ├─ fechaFin: LocalDate              [Fecha de finalización]                 │
+│ ├─ productosAplicables: List        [Productos con esta promoción]          │
+│ └─ activa: boolean                  [Estado de la promoción]                │
+│                                                                             │
+│ CONSTRUCTORES:                                                              │
+│ └─ Promocion(id, nombre, descuento, fechaInicio, fechaFin)                │
+│                                                                             │
+│ MÉTODOS PRINCIPALES:                                                        │
+│ ├─ agregarProducto(Producto): void                                          │
+│ ├─ removerProducto(Producto): void                                          │
+│ ├─ esValida(): boolean              [Verifica si está vigente]              │
+│ ├─ calcularDescuento(double): double [Calcula monto de descuento]           │
+│ ├─ getId(): int                                                             │
+│ ├─ setId(int): void                                                         │
+│ ├─ getNombre(): String                                                      │
+│ ├─ setNombre(String): void                                                  │
+│ ├─ getDescuento(): double                                                   │
+│ ├─ setDescuento(double): void                                               │
+│ ├─ getFechaInicio(): LocalDate                                              │
+│ ├─ setFechaInicio(LocalDate): void                                          │
+│ ├─ getFechaFin(): LocalDate                                                 │
+│ ├─ setFechaFin(LocalDate): void                                             │
+│ ├─ getProductosAplicables(): List                                           │
+│ ├─ setProductosAplicables(List): void                                       │
+│ ├─ isActiva(): boolean                                                      │
+│ └─ setActiva(boolean): void                                                 │
+│                                                                             │
+│ RESPONSABILIDAD: Gestionar promociones y descuentos aplicables a productos │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                         CLASE: ItemPedido                                   │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ DESCRIPCIÓN: Representa un producto dentro de un pedido (Entidad de relación)
+│                                                                             │
+│ ATRIBUTOS PRIVADOS:                                                         │
+│ ├─ producto: Producto               [Referencia al producto]               │
+│ ├─ cantidad: int                    [Cantidad solicitada]                   │
+│ ├─ precioUnitario: double           [Precio en que se vendió]               │
+│ └─ promocion: Promocion             [Promoción aplicada (si la hay)]        │
+│                                                                             │
+│ CONSTRUCTORES:                                                              │
+│ └─ ItemPedido(Producto, cantidad)                                           │
+│                                                                             │
+│ MÉTODOS PRINCIPALES:                                                        │
+│ ├─ getSubtotal(): double            [precio * cantidad]                     │
+│ ├─ getTotal(): double               [Subtotal menos descuento]              │
+│ ├─ getDescuentoAplicado(): double   [Monto del descuento]                   │
+│ ├─ getProducto(): Producto                                                  │
+│ ├─ setProducto(Producto): void                                              │
+│ ├─ getCantidad(): int                                                       │
+│ ├─ setCantidad(int): void                                                   │
+│ ├─ getPrecioUnitario(): double                                              │
+│ ├─ setPrecioUnitario(double): void                                          │
+│ ├─ getPromocion(): Promocion                                                │
+│ ├─ setPromocion(Promocion): void                                            │
+│ └─ toString(): String                                                       │
+│                                                                             │
+│ RESPONSABILIDAD: Vincular productos con pedidos y manejar cantidades/precios
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                          CLASE: Pedido                                      │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ ENUMERACIÓN ANIDADA:                                                        │
+│ ├─ EstadoPedido.PENDIENTE                                                   │
+│ ├─ EstadoPedido.EN_PREPARACION                                              │
+│ ├─ EstadoPedido.LISTO                                                       │
+│ ├─ EstadoPedido.ENTREGADO                                                   │
+│ └─ EstadoPedido.CANCELADO                                                   │
+│                                                                             │
+│ ATRIBUTOS PRIVADOS:                                                         │
+│ ├─ id: int                          [Identificador único]                   │
+│ ├─ cliente: Cliente                 [Cliente que realiza el pedido]         │
+│ ├─ items: List<ItemPedido>          [Lista de productos en el pedido]       │
+│ ├─ fechaPedido: LocalDate           [Fecha de realización]                  │
+│ ├─ fechaEntrega: LocalDate          [Fecha programada de entrega]           │
+│ ├─ estado: EstadoPedido             [Estado actual del pedido]              │
+│ └─ total: double                    [Monto total del pedido]                │
+│                                                                             │
+│ CONSTRUCTORES:                                                              │
+│ └─ Pedido(id, Cliente, fechaPedido) [Estado inicial: PENDIENTE]             │
+│                                                                             │
+│ MÉTODOS PRINCIPALES:                                                        │
+│ ├─ agregarItem(ItemPedido): void    [Agrega producto al pedido]             │
+│ ├─ removerItem(ItemPedido): void    [Remueve producto específico]           │
+│ ├─ removerItem(int): void           [Remueve por índice]                    │
+│ ├─ calcularTotal(): void            [Actualiza el total]                    │
+│ ├─ cambiarEstado(EstadoPedido): void[Cambia estado del pedido]              │
+│ ├─ getId(): int                                                             │
+│ ├─ setId(int): void                                                         │
+│ ├─ getCliente(): Cliente                                                    │
+│ ├─ setCliente(Cliente): void                                                │
+│ ├─ getItems(): List<ItemPedido>                                             │
+│ ├─ setItems(List): void                                                     │
+│ ├─ getFechaPedido(): LocalDate                                              │
+│ ├─ setFechaPedido(LocalDate): void                                          │
+│ ├─ getFechaEntrega(): LocalDate                                             │
+│ ├─ setFechaEntrega(LocalDate): void                                         │
+│ ├─ getEstado(): EstadoPedido                                                │
+│ ├─ setEstado(EstadoPedido): void                                            │
+│ ├─ getTotal(): double                                                       │
+│ ├─ setTotal(double): void                                                   │
+│ └─ toString(): String                                                       │
+│                                                                             │
+│ RESPONSABILIDAD: Gestionar pedidos de clientes y su ciclo de vida           │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                        CLASE: ItemFactura                                   │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ DESCRIPCIÓN: Representa un item (producto) en una factura (Entidad de relación)
+│                                                                             │
+│ ATRIBUTOS PRIVADOS:                                                         │
+│ ├─ id: int                          [Identificador único]                   │
+│ ├─ idFactura: int                   [Referencia a la factura]               │
+│ ├─ idProducto: int                  [Identificador del producto]            │
+│ ├─ nombreProducto: String           [Nombre del producto]                   │
+│ ├─ cantidad: int                    [Cantidad en la factura]                │
+│ ├─ precioUnitario: double           [Precio por unidad]                     │
+│ └─ subtotal: double                 [cantidad * precioUnitario]             │
+│                                                                             │
+│ CONSTRUCTORES:                                                              │
+│ └─ ItemFactura(id, idFactura, idProducto, nombreProducto, cantidad, precio)
+│                                                                             │
+│ MÉTODOS:                                                                    │
+│ ├─ Getters: getId(), getIdFactura(), getIdProducto(), getNombreProducto()  │
+│ ├─          getCantidad(), getPrecioUnitario(), getSubtotal()              │
+│ ├─ Setters: setId(), setIdFactura(), setCantidad(), setPrecioUnitario()    │
+│ └─ toString(): String               [Representación en texto]              │
+│                                                                             │
+│ CÁLCULOS AUTOMÁTICOS:                                                       │
+│ ├─ Al cambiar cantidad → subtotal se recalcula                             │
+│ └─ Al cambiar precio → subtotal se recalcula                               │
+│                                                                             │
+│ RESPONSABILIDAD: Detallar productos incluidos en una factura                │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                          CLASE: Factura                                     │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ DESCRIPCIÓN: Representación legal de una venta                              │
+│                                                                             │
+│ ATRIBUTOS PRIVADOS:                                                         │
+│ ├─ id: int                          [PK en base de datos]                   │
+│ ├─ idPedido: int                    [FK referencia a Pedido]                │
+│ ├─ numeroFactura: int               [Número correlativo]                    │
+│ ├─ idCliente: int                   [FK referencia a Cliente]               │
+│ ├─ fechaEmision: LocalDateTime      [Fecha y hora de emisión]               │
+│ ├─ subtotal: double                 [Monto sin impuestos ni descuentos]     │
+│ ├─ impuesto: double                 [IVA u otro impuesto]                   │
+│ ├─ descuento: double                [Descuento aplicado]                    │
+│ ├─ total: double                    [Monto final a pagar]                   │
+│ ├─ estado: String                   [Emitida, Pagada, Cancelada]            │
+│ ├─ items: List<ItemFactura>         [Detalle de productos]                  │
+│ ├─ metodoPago: String               [Efectivo, Tarjeta, Transferencia]      │
+│ ├─ fechaPago: LocalDateTime         [Fecha del pago]                        │
+│ └─ observaciones: String            [Notas adicionales]                     │
+│                                                                             │
+│ CONSTRUCTORES:                                                              │
+│ ├─ Factura(id, idPedido, numeroFactura, idCliente, fechaEmision, subtotal, │
+│ │           impuesto, descuento, total, estado, metodoPago)                │
+│ ├─ Factura(numeroFactura, idCliente, fechaEmision, subtotal, impuesto,     │
+│ │           descuento) [Sin ID, para inserciones]                          │
+│ └─ Factura() [Constructor vacío]                                            │
+│                                                                             │
+│ MÉTODOS PRINCIPALES:                                                        │
+│ ├─ agregarItem(ItemFactura): void                                           │
+│ ├─ removerItem(int): void                                                   │
+│ ├─ calcularTotal(): double          [Subtotal + impuesto - descuento]       │
+│ ├─ getItems(): List<ItemFactura>                                            │
+│ ├─ setItems(List): void                                                     │
+│ ├─ getId(): int, setId(int): void                                           │
+│ ├─ getIdPedido(): int, setIdPedido(int): void                               │
+│ ├─ getNumeroFactura(): int, setNumeroFactura(int): void                     │
+│ ├─ getIdCliente(): int, setIdCliente(int): void                             │
+│ ├─ getFechaEmision(): LocalDateTime, setFechaEmision(): void                │
+│ ├─ getSubtotal(): double, setSubtotal(double): void                         │
+│ ├─ getImpuesto(): double, setImpuesto(double): void                         │
+│ ├─ getDescuento(): double, setDescuento(double): void                       │
+│ ├─ getTotal(): double, setTotal(double): void                               │
+│ ├─ getEstado(): String, setEstado(String): void                             │
+│ ├─ getMetodoPago(): String, setMetodoPago(String): void                     │
+│ ├─ getFechaPago(): LocalDateTime, setFechaPago(): void                      │
+│ ├─ getObservaciones(): String, setObservaciones(String): void               │
+│ └─ toString(): String                                                       │
+│                                                                             │
+│ RESPONSABILIDAD: Generar y gestionar facturas de venta                      │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                       CLASE: CarroCompras                                   │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ DESCRIPCIÓN: Carrito de compras temporal del cliente                        │
+│                                                                             │
+│ ATRIBUTOS PRIVADOS:                                                         │
+│ ├─ items: List<ItemPedido>          [Productos en el carrito]               │
+│ └─ total: double                    [Monto total del carrito]               │
+│                                                                             │
+│ CONSTRUCTORES:                                                              │
+│ └─ CarroCompras()                   [Inicializa lista vacía y total 0]      │
+│                                                                             │
+│ MÉTODOS PRINCIPALES:                                                        │
+│ ├─ agregarProducto(Producto, cantidad): void                               │
+│ │  [Si el producto existe, aumenta cantidad; sino, lo agrega]              │
+│ ├─ removerProducto(int): void       [Elimina por índice]                    │
+│ ├─ actualizarCantidad(int, nuevaCantidad): void                             │
+│ │  [Si cantidad ≤ 0, elimina; sino actualiza]                              │
+│ ├─ aplicarPromocion(int, Promocion): void                                   │
+│ │  [Aplica descuento a un item específico]                                  │
+│ ├─ calcularTotal(): void            [Recalcula el total]                    │
+│ ├─ vaciar(): void                   [Limpia el carrito]                     │
+│ ├─ estaVacio(): boolean             [Comprueba si hay items]                │
+│ ├─ getCantidadProductos(): int      [Suma de cantidades]                    │
+│ ├─ getItems(): List<ItemPedido>                                             │
+│ ├─ getTotal(): double                                                       │
+│ ├─ setTotal(double): void                                                   │
+│ └─ toString(): String                                                       │
+│                                                                             │
+│ RESPONSABILIDAD: Gestionar carrito de compras temporal del cliente          │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                       CLASE: HistorialVenta                                 │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ DESCRIPCIÓN: Registro histórico de todas las transacciones realizadas       │
+│                                                                             │
+│ ATRIBUTOS PRIVADOS:                                                         │
+│ ├─ id: int                          [Identificador único]                   │
+│ ├─ idPedido: int                    [FK referencia a Pedido]                │
+│ ├─ idCliente: int                   [FK referencia a Cliente]               │
+│ ├─ fechaVenta: LocalDateTime        [Fecha y hora de la venta]              │
+│ ├─ montoTotal: double               [Monto total de la venta]               │
+│ ├─ estado: String                   [Completado, Cancelado, Pendiente]      │
+│ ├─ metodoPago: String               [Efectivo, Tarjeta, Transferencia]      │
+│ ├─ descuentoAplicado: double        [Monto de descuento en $]               │
+│ └─ notas: String                    [Notas adicionales de la venta]         │
+│                                                                             │
+│ CONSTRUCTORES:                                                              │
+│ ├─ HistorialVenta(id, idPedido, idCliente, fechaVenta, montoTotal, estado, │
+│ │                metodoPago, descuentoAplicado, notas) [Completo]          │
+│ ├─ HistorialVenta(idPedido, idCliente, fechaVenta, montoTotal, estado,     │
+│ │                metodoPago, descuentoAplicado) [Sin ID]                   │
+│                                                                             │
+│ MÉTODOS:                                                                    │
+│ ├─ getId(): int, setId(int): void                                           │
+│ ├─ getIdPedido(): int, setIdPedido(int): void                               │
+│ ├─ getIdCliente(): int, setIdCliente(int): void                             │
+│ ├─ getFechaVenta(): LocalDateTime, setFechaVenta(): void                    │
+│ ├─ getMontoTotal(): double, setMontoTotal(double): void                     │
+│ ├─ getEstado(): String, setEstado(String): void                             │
+│ ├─ getMetodoPago(): String, setMetodoPago(String): void                     │
+│ ├─ getDescuentoAplicado(): double, setDescuentoAplicado(): void             │
+│ ├─ getNotas(): String, setNotas(String): void                               │
+│ └─ toString(): String                                                       │
+│                                                                             │
+│ RESPONSABILIDAD: Auditoría y análisis de ventas realizadas                  │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+================================================================================
+3. RELACIONES ENTRE CLASES
+================================================================================
+
+RELACIÓN: Cliente - Pedido
+├─ Tipo: UNO A MUCHOS (1:N)
+├─ Descripción: Un cliente puede tener varios pedidos, pero cada pedido
+│               pertenece solo a un cliente
+└─ Implementación: Pedido contiene referencia a Cliente
+
+RELACIÓN: Pedido - ItemPedido
+├─ Tipo: UNO A MUCHOS (1:N)
+├─ Descripción: Un pedido contiene múltiples items, cada item corresponde
+│               a un producto con cantidad y precio
+└─ Implementación: Pedido tiene List<ItemPedido>
+
+RELACIÓN: ItemPedido - Producto
+├─ Tipo: MUCHOS A UNO (N:1)
+├─ Descripción: Múltiples items pueden referenciar el mismo producto
+│               (en diferentes pedidos)
+└─ Implementación: ItemPedido contiene referencia a Producto
+
+RELACIÓN: ItemPedido - Promocion
+├─ Tipo: UNO A UNO (1:1) [Opcional]
+├─ Descripción: Un item puede tener una promoción aplicada (opcional)
+└─ Implementación: ItemPedido contiene referencia a Promocion (nullable)
+
+RELACIÓN: Producto - Promocion
+├─ Tipo: MUCHOS A MUCHOS (N:M)
+├─ Descripción: Un producto puede estar en varias promociones
+│               Una promoción puede aplicarse a varios productos
+└─ Implementación: Promocion tiene List<Producto>
+
+RELACIÓN: Cliente - Factura
+├─ Tipo: UNO A MUCHOS (1:N)
+├─ Descripción: Un cliente tiene varias facturas relacionadas a sus pedidos
+└─ Implementación: Factura contiene idCliente
+
+RELACIÓN: Pedido - Factura
+├─ Tipo: UNO A UNO (1:1)
+├─ Descripción: Un pedido genera una factura
+└─ Implementación: Factura contiene idPedido
+
+RELACIÓN: Factura - ItemFactura
+├─ Tipo: UNO A MUCHOS (1:N)
+├─ Descripción: Una factura detalla múltiples items (productos)
+└─ Implementación: Factura tiene List<ItemFactura>
+
+RELACIÓN: Cliente - HistorialVenta
+├─ Tipo: UNO A MUCHOS (1:N)
+├─ Descripción: Un cliente tiene múltiples registros de venta
+└─ Implementación: HistorialVenta contiene idCliente
+
+RELACIÓN: Pedido - HistorialVenta
+├─ Tipo: UNO A UNO (1:1)
+├─ Descripción: Cada pedido tiene un registro en el historial de ventas
+└─ Implementación: HistorialVenta contiene idPedido
+
+RELACIÓN: CarroCompras - ItemPedido
+├─ Tipo: UNO A MUCHOS (1:N)
+├─ Descripción: Un carrito contiene múltiples items
+└─ Implementación: CarroCompras tiene List<ItemPedido>
+
+================================================================================
+4. FLUJO DE NEGOCIO PRINCIPAL
+================================================================================
+
+PROCESO: Compra de un Cliente
+┌────────────────────────────────────────────────────────────────────────────┐
+│                                                                            │
+│ 1. INICIO: Cliente selecciona productos                                   │
+│    └─> Se crean ItemPedido con Producto y cantidad                       │
+│    └─> Se agregan a CarroCompras                                          │
+│                                                                            │
+│ 2. APLICACIÓN DE PROMOCIONES (Opcional)                                  │
+│    └─> Cliente puede aplicar código de promoción                         │
+│    └─> Sistema valida si Promocion.esValida()                            │
+│    └─> Se aplica descuento a ItemPedido específicos                       │
+│    └─> CarroCompras.calcularTotal() actualiza monto                       │
+│                                                                            │
+│ 3. CONFIRMACIÓN DE COMPRA                                                 │
+│    └─> Se crea nuevo Pedido con estado PENDIENTE                         │
+│    └─> Se transfieren items de CarroCompras a Pedido                     │
+│    └─> Se calcula Pedido.total                                            │
+│    └─> Se guarda en BD (PedidoDAO)                                        │
+│    └─> CarroCompras.vaciar()                                              │
+│                                                                            │
+│ 4. CAMBIOS DE ESTADO DEL PEDIDO                                           │
+│    Pedido: PENDIENTE → EN_PREPARACION → LISTO → ENTREGADO                │
+│                                                                            │
+│ 5. EMISIÓN DE FACTURA                                                     │
+│    └─> Desde Pedido entregado se genera Factura                           │
+│    └─> Se crean ItemFactura para cada ItemPedido                          │
+│    └─> Se calcula: subtotal, impuesto, descuento, total                   │
+│    └─> Se registra metodoPago                                             │
+│    └─> Factura.estado = "Pagada"                                          │
+│                                                                            │
+│ 6. REGISTRO EN HISTORIAL                                                  │
+│    └─> Se crea HistorialVenta con datos finales                           │
+│    └─> Se registra fecha, monto, estado, descuentos                       │
+│    └─> Disponible para reportes y auditoría                               │
+│                                                                            │
+└────────────────────────────────────────────────────────────────────────────┘
+
+================================================================================
+5. CICLO DE VIDA DE ENTIDADES
+================================================================================
+
+CLIENTE:
+  Creación → Registro en BD → (Varios Pedidos/Facturas) → Deactivación
+
+PRODUCTO:
+  Creación → Disponible → (0..* Promociones) → Descontinuado
+
+PROMOCION:
+  Creación → Vigencia (fechaInicio a fechaFin) → Finalización
+  ├─ Durante vigencia: promocion.esValida() = true
+  └─ Fuera de vigencia: promocion.esValida() = false
+
+PEDIDO:
+  PENDIENTE → EN_PREPARACION → LISTO → ENTREGADO
+        ↓ (opcional)
+     CANCELADO
+
+FACTURA:
+  Emitida → Pagada → Archivada
+
+CARROCOMPRAS:
+  Creación → Agregar/Actualizar Items → Aplicar Promociones
+       → Confirmar (Crear Pedido) → Vaciar
+
+================================================================================
+6. EJEMPLO: Secuencia DE UNA COMPRA
+================================================================================
+
+DATOS INICIALES:
+├─ cliente@email.com (Cliente id=1)
+├─ Pan Dulce (Producto id=101, $5.00)
+├─ Torta (Producto id=102, $25.00)
+└─ Promo: "Descuento Verano" (20% en Torta)
+
+SECUENCIA:
+┌─────────────────────────────────────────────────────────┐
+│ 1. Cliente abre carrito                                  │
+│    CarroCompras cc = new CarroCompras()                 │
+│    total = $0.00                                        │
+│                                                         │
+│ 2. Agrega productos                                     │
+│    cc.agregarProducto(panDulce, 2)                      │
+│    └─ ItemPedido(panDulce, 2, $5.00)                    │
+│    └─ total = $10.00                                    │
+│                                                         │
+│    cc.agregarProducto(torta, 1)                         │
+│    └─ ItemPedido(torta, 1, $25.00)                      │
+│    └─ total = $35.00                                    │
+│                                                         │
+│ 3. Aplica promoción (20% descuento)                     │
+│    cc.aplicarPromocion(1, promoVerano)                  │
+│    └─ item[1].setPromocion(promoVerano)                 │
+│    └─ subtotal torta: $25.00                            │
+│    └─ descuento: $5.00 (20%)                            │
+│    └─ item[1] total: $20.00                             │
+│    └─ cc.total = $30.00 (10 + 20)                       │
+│                                                         │
+│ 4. Confirma compra                                      │
+│    Pedido p = new Pedido(1, cliente, 06/02/2026)        │
+│    for (ItemPedido item : cc.getItems())                │
+│        p.agregarItem(item)                              │
+│    └─ p.total = $30.00                                  │
+│    └─ p.estado = PENDIENTE                              │
+│    └─ Guardado en BD                                    │
+│                                                         │
+│ 5. Vacía carrito                                        │
+│    cc.vaciar()                                          │
+│    └─ cc.items = []                                     │
+│    └─ cc.total = 0                                      │
+│                                                         │
+│ 6. Cambios de estado                                    │
+│    pedido.setEstado(EN_PREPARACION)                     │
+│    pedido.setEstado(LISTO)                              │
+│    pedido.setEstado(ENTREGADO)                          │
+│                                                         │
+│ 7. Emite factura                                        │
+│    Factura f = new Factura(...)                         │
+│    ├─ numeroFactura = 1001                              │
+│    ├─ idCliente = 1                                     │
+│    ├─ idPedido = 1                                      │
+│    ├─ fechaEmision = 06/02/2026                         │
+│    ├─ subtotal = $30.00                                 │
+│    ├─ impuesto = $5.70 (19%)                            │
+│    ├─ descuento = $5.00                                 │
+│    ├─ total = $30.70                                    │
+│    └─ metodoPago = "Tarjeta"                            │
+│                                                         │
+│ 8. Registra en historial                                │
+│    HistorialVenta hv = new HistorialVenta(...)          │
+│    ├─ idPedido = 1                                      │
+│    ├─ idCliente = 1                                     │
+│    ├─ montoTotal = $30.70                               │
+│    ├─ descuentoAplicado = $5.00                         │
+│    └─ estado = "Completado"                             │
+│                                                         │
+└─────────────────────────────────────────────────────────┘
+
+================================================================================
+7. NOTAS IMPORTANTES
+================================================================================
+
+HERENCIA:
+  └─ Las clases NO utilizan herencia directamente
+  └─ Utilizan composición (contienen referencias a otros objetos)
+
+ENUMERACIONES:
+  └─ Pedido.EstadoPedido: Define estados válidos del pedido
+
+TIPOS DE DATOS:
+  ├─ LocalDate: Para fechas sin hora (fechaInicio, fechaFin)
+  ├─ LocalDateTime: Para fecha y hora completa (fechaEmision, fechaVenta)
+  └─ double: Para cálculos monetarios (considerar BigDecimal para producción)
+
+CÁLCULOS AUTOMÁTICOS:
+  ├─ CarroCompras.calcularTotal(): Actualiza total tras cambios
+  ├─ ItemPedido.getTotal(): Calcula con descuentos aplicables
+  ├─ ItemPedido.getSubtotal(): cantidad * precioUnitario
+  └─ Pedido.calcularTotal(): Suma de todos los ItemPedido
+
+VALIDACIONES:
+  ├─ Promocion.esValida(): Verifica fecha de vigencia
+  ├─ Pedido.cambiarEstado(): Controla transiciones válidas
+  └─ EntidadDAO: Valida duplicados en BD
+
+================================================================================
+Documento generado automáticamente - SweetLabBakery Sistema de Gestión
+Última actualización: 6 de febrero de 2026
+================================================================================

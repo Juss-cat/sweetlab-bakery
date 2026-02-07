@@ -1,0 +1,143 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(135deg, #ffeef8 0%, #e6d7e8 100%);
+  min-height: 100vh;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.container {
+  flex: 1;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Colores SweetLab */
+:root {
+  --pink-primary: #FFB6D9;
+  --pink-dark: #FF99C8;
+  --purple-main: #8B6B8B;
+  --purple-light: #B8A8B8;
+  --red-accent: #C41E3A;
+  --white: #FFFFFF;
+  --gray-light: #F5F5F5;
+  --gray-dark: #333333;
+}
+
+/* Botones */
+button {
+  background: linear-gradient(135deg, var(--pink-primary) 0%, var(--pink-dark) 100%);
+  color: var(--white);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 99, 200, 0.3);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+/* Inputs */
+input, textarea, select {
+  padding: 10px 15px;
+  border: 2px solid var(--pink-primary);
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 14px;
+  transition: border-color 0.3s ease;
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--purple-main);
+  box-shadow: 0 0 0 3px rgba(139, 107, 139, 0.1);
+}
+
+/* Cards */
+.card {
+  background: var(--white);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Loading */
+.loading {
+  text-align: center;
+  padding: 40px;
+  color: var(--purple-main);
+}
+
+.spinner {
+  border: 4px solid var(--gray-light);
+  border-top: 4px solid var(--pink-primary);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 20px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Mensajes */
+.success {
+  background: #d4edda;
+  color: #155724;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border-left: 4px solid #28a745;
+}
+
+.error {
+  background: #f8d7da;
+  color: #721c24;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border-left: 4px solid #f5c6cb;
+}
+
+.info {
+  background: #d1ecf1;
+  color: #0c5460;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border-left: 4px solid #17a2b8;
+}

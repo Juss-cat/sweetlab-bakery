@@ -1,0 +1,17 @@
+com\sweetlab\service\PedidoService.class
+com\sweetlab\repository\PromocionRepository.class
+com\sweetlab\entity\Promocion.class
+com\sweetlab\entity\ItemPedido.class
+com\sweetlab\repository\ClienteRepository.class
+com\sweetlab\entity\Pedido.class
+com\sweetlab\repository\ProductoRepository.class
+com\sweetlab\repository\PedidoRepository.class
+com\sweetlab\controller\PedidoController.class
+com\sweetlab\service\ClienteService.class
+com\sweetlab\entity\Producto.class
+com\sweetlab\service\PromocionService.class
+com\sweetlab\controller\ProductoController.class
+com\sweetlab\controller\ClienteController.class
+com\sweetlab\service\ProductoService.class
+com\sweetlab\controller\PromocionController.class
+com\sweetlab\entity\Cliente.class
