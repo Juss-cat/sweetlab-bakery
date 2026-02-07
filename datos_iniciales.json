@@ -1,0 +1,98 @@
+{
+  "productos": [
+    {
+      "id": 1,
+      "nombre": "Cheesecake Clásico",
+      "tipo": "Postres",
+      "precio": 45.99,
+      "descripcion": "Delicioso cheesecake con base de galeta",
+      "stock": 15,
+      "esNuevo": true,
+      "esMasVendido": true
+    },
+    {
+      "id": 2,
+      "nombre": "Brownie Chocolate",
+      "tipo": "Postres",
+      "precio": 22.50,
+      "descripcion": "Brownie artesanal de chocolate premium",
+      "stock": 30,
+      "esNuevo": false,
+      "esMasVendido": true
+    },
+    {
+      "id": 3,
+      "nombre": "Torta Fresas",
+      "tipo": "Postres",
+      "precio": 55.00,
+      "descripcion": "Torta de fresas con crema fresca",
+      "stock": 10,
+      "esNuevo": true,
+      "esMasVendido": false
+    },
+    {
+      "id": 4,
+      "nombre": "Café Especial",
+      "tipo": "Bebidas",
+      "precio": 18.00,
+      "descripcion": "Café expreso gourmet",
+      "stock": 50,
+      "esNuevo": false,
+      "esMasVendido": true
+    },
+    {
+      "id": 5,
+      "nombre": "Chocolate Caliente",
+      "tipo": "Bebidas",
+      "precio": 20.00,
+      "descripcion": "Chocolate artesanal con leche",
+      "stock": 40,
+      "esNuevo": false,
+      "esMasVendido": false
+    },
+    {
+      "id": 6,
+      "nombre": "Sándwich Jamón",
+      "tipo": "Comidas",
+      "precio": 35.00,
+      "descripcion": "Sándwich con jamón serrano premium",
+      "stock": 25,
+      "esNuevo": false,
+      "esMasVendido": false
+    }
+  ],
+  "clientes_demo": [
+    {
+      "id": 1,
+      "nombre": "María García",
+      "email": "maria@email.com",
+      "telefono": "555-0001",
+      "direccion": "Calle Principal 123"
+    },
+    {
+      "id": 2,
+      "nombre": "Juan Pérez",
+      "email": "juan@email.com",
+      "telefono": "555-0002",
+      "direccion": "Avenida Central 456"
+    }
+  ],
+  "promociones": [
+    {
+      "id": 1,
+      "nombre": "Combo Desayuno",
+      "descripcion": "Café + Brownie + Sándwich",
+      "productos": [4, 2, 6],
+      "descuento": 15,
+      "precioTotal": 68.00
+    },
+    {
+      "id": 2,
+      "nombre": "Combo Postres",
+      "descripcion": "Cheesecake + Brownie + Chocolate",
+      "productos": [1, 2, 5],
+      "descuento": 20,
+      "precioTotal": 80.00
+    }
+  ]
+}
