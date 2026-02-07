@@ -1,0 +1,9 @@
+run = "cd frontend && npm run dev"
+entrypoint = "frontend/vite.config.js"
+
+[environments]
+node = "18"
+
+[deployment]
+deploymentTarget = "static"
+publicDir = "frontend/dist"
